@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Constants\StringConstant;
 use App\Models\Skill;
+use App\Traits\AppControllerTrait;
 use App\Utils\RequestHelper;
 use App\Utils\ResponseHelper;
 use Illuminate\Http\Request;
 
 class SkillController extends Controller
 {
+    use AppControllerTrait;
     
-    public function index($userId)
+    public function index(Request $request)
     {
+        $userId = $request->get('user_id');
+       
         $allSkill = Skill::where(["user_id" => $userId])->get();
         return ResponseHelper::appResponse([
             "data" => $allSkill,

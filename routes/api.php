@@ -10,4 +10,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('create/skill/without/test', [SkillController::class, 'create']);
-Route::get('get/skill/{userId}', [SkillController::class, 'index']);
+
+Route::middleware(['verify.jwt'])->group(function () {
+    Route::get('get/skill', [SkillController::class, 'index']);
+});
