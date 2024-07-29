@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constants\StringConstant;
 use App\Models\Skill;
+use App\Models\Task;
 use App\Traits\AppControllerTrait;
 use App\Utils\RequestHelper;
 use App\Utils\ResponseHelper;
@@ -16,8 +17,19 @@ class SkillController extends Controller
     public function index(Request $request)
     {
         $userId = $request->get('user_id');
-       
         $allSkill = Skill::where(["user_id" => $userId])->get();
+        return ResponseHelper::appResponse([
+            "data" => $allSkill,
+            "status" => 201,
+            "msg" => "",
+            "success" => true,
+        ]);
+    }
+
+    public function getSkillTask($skillId) {
+        $allSkill = Skill::where(["id" => $skillId])->first();
+        $allTask = Task::all();
+        $allSkill['allTask'] = $allTask;
         return ResponseHelper::appResponse([
             "data" => $allSkill,
             "status" => 201,
@@ -64,7 +76,7 @@ class SkillController extends Controller
      */
     public function show(Skill $skill)
     {
-        //
+        
     }
 
     /**

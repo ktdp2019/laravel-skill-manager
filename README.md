@@ -1,1 +1,3 @@
-Release 1 1. Create a DB table to store skill ( Name and description )
+# Release
+
+    1. Expose a api to skill detail with all the tasks.

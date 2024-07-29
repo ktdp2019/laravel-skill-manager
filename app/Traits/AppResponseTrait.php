@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Constants\AppString;
+use App\Constants\StringConstant;
 use Illuminate\Support\Facades\Validator;
 
 trait AppResponseTrait {
@@ -15,7 +16,7 @@ trait AppResponseTrait {
         return $this->appResponse([
             "status" => 400,
             "error" => $errors,
-            "msg" => AppString::$incompletePayload,
+            "msg" => StringConstant::$incompletePayload,
         ]);
     }
 }
