@@ -11,7 +11,7 @@ class TaskController extends Controller
 {
     use AppControllerTrait;
     
-    public function createTask(Request $request) {
+    public function createSprint(Request $request) {
         $inValidResponse = $this->inValidateRequest($request, [
             'skillId' => 'required',
             'detail' => 'required',
@@ -23,4 +23,10 @@ class TaskController extends Controller
         }
         return $inValidResponse;
     }
+
+    public function getAllSprint($skillId) {
+        $allSprint = Task::where(['skill_id' => $skillId])->get();
+        return $this->appResponse(['data' => $allSprint, 'success' => true,  'status' => ResStatus::$Status201]);
+    }
+
 }

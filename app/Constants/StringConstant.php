@@ -12,4 +12,5 @@ class StringConstant {
     public static $TOKEN_EXPIRED = "Token has expired";
     public static $TOKEN_INVALID = "Invalid Token";
     public static $TOKEN_NOT_FOUND = "Token not found";
+    public static $SWW = "Something went wrong";
 }
