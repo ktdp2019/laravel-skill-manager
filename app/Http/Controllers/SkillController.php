@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constants\StringConstant;
 use App\Models\Skill;
+use App\Models\Sprint;
 use App\Models\Task;
 use App\Traits\AppControllerTrait;
 use App\Utils\RequestHelper;
@@ -75,8 +76,15 @@ class SkillController extends Controller
      * Display the specified resource.
      */
     public function show(Skill $skill)
-    {
-        
+    {   
+        $allSprint = Sprint::where(["skill_id" => $skill->id])->get();
+        $skill['allSprint'] = $allSprint;
+        return ResponseHelper::appResponse([
+            "data" => $skill,
+            "status" => 201,
+            "msg" => "",
+            "success" => true,
+        ]);
     }
 
     /**
