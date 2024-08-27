@@ -27,9 +27,11 @@ Route::middleware(['verify.jwt'])->group(function () {
 
     // Theory notes
     Route::post('theory/note/create', [TheoryNoteController::class, 'store'],);
+    Route::get('theory/note/all/{theoryId}', [TheoryNoteController::class, 'index'],);
 
     // Practical notes
     Route::post('practical/note/create', [PracticalNoteController::class, 'store'],);
+    Route::get('practical/note/all/{practicalId}', [PracticalNoteController::class, 'index'],);
 
     
    

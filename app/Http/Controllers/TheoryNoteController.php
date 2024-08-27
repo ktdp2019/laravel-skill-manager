@@ -10,12 +10,15 @@ use Illuminate\Http\Request;
 
 class TheoryNoteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index($theoryId)
     {
-        //
+        $allNote = TheoryNote::where(["theory_id" => $theoryId])->get();
+        return ResponseHelper::appResponse([
+            "data" => $allNote,
+            "status" => 201,
+            "msg" => "",
+            "success" => true,
+        ]);
     }
 
     /**

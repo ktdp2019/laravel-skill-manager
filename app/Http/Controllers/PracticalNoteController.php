@@ -13,9 +13,15 @@ class PracticalNoteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($practicalId)
     {
-        //
+        $allNote = PracticalNote::where(["practical_id" => $practicalId])->get();
+        return ResponseHelper::appResponse([
+            "data" => $allNote,
+            "status" => 201,
+            "msg" => "",
+            "success" => true,
+        ]);
     }
 
     /**
