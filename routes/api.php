@@ -13,13 +13,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('create/skill/without/test', [SkillController::class, 'create']);
-
 Route::middleware(['verify.jwt'])->group(function () {
+
+    // Skill
+    Route::post('create/skill/without/test', [SkillController::class, 'create']);
     Route::get('get/skill', [SkillController::class, 'index']);
     Route::get('get/skill/{skill}', [SkillController::class, 'show']);
     Route::get('get/sprint/{skillId}', [TaskController::class, 'getAllSprint']);
     Route::post('create/task', [TaskController::class, 'createSprint']);
+    Route::post('skill/category/create', [SkillController::class, 'addSkillCategory']);
+    Route::get('skill/category/all/get', [SkillController::class, 'getAllSkillCategory']);
 
     // Sprint
     Route::post('sprint/create', [SprintController::class, 'store'],);

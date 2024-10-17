@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\ResStatus;
 use App\Constants\StringConstant;
 use App\Models\Skill;
+use App\Models\SkillCategory;
 use App\Models\Sprint;
 use App\Models\Task;
 use App\Traits\AppControllerTrait;
@@ -39,27 +41,51 @@ class SkillController extends Controller
         ]);
     }
 
+    public function addSkillCategory(Request $request) {
+        $rBody = [
+            'title' => 'required',
+            'skill_category_id' => 'required',
+        ];
+        if ($this->isInvalidRequest($request, $rBody)) {
+            return  $this->incompleteRequest();
+        }
+        $skillCatogory = new SkillCategory();
+        $skillCatogory->createCategory($request);
+        return  $this->appResponse([
+            'status' => ResStatus::$Status201, 
+            'data' => $skillCatogory,
+            'msg' => StringConstant::$SKILL_CATEGORY_ST,
+            'success' => true,
+        ]);
+    }
+
+    public function getAllSkillCategory() {
+        return  $this->appResponse([
+            'status' => ResStatus::$Status200, 
+            'data' => SkillCategory::all(),
+            'msg' => StringConstant::$REQUEST_SUCCESS,
+            'success' => true,
+        ]);
+    }
+
     public function create(Request $request)
     {
         $rBody = [
             'title' => 'required',
-            'description' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'category_id' => 'required',
+            'category_name' => 'required',
         ];
-        $validator = RequestHelper::validateRequest($request, $rBody);
-        if ($validator->fails()) {
-            return ResponseHelper::appResponse([
-                "data" => null,
-                "status" => 400,
-                "error" => $validator->errors(),
-                "msg" => StringConstant::$incompletePayload,
-            ]);
-        }
+        $this->isInvalidRequest($request, $rBody);
+        $userId = $request->get('user_id');
+        $request['userId'] = $userId;
         $newSkill = new Skill();
         $newSkill->createSkill($request);
-        return ResponseHelper::appResponse([
+        return $this->appResponse([
             "data" => ['id' => $newSkill->id],
-            "status" => 201,
-            "msg" => "Skill created successfully",
+            "status" => ResStatus::$Status201,
+            "msg" => StringConstant::$SKILL_CREATED,
             "success" => true,
         ]);
     }

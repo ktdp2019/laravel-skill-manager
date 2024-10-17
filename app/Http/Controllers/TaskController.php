@@ -12,7 +12,7 @@ class TaskController extends Controller
     use AppControllerTrait;
     
     public function createSprint(Request $request) {
-        $inValidResponse = $this->inValidateRequest($request, [
+        $inValidResponse = $this->isInvalidRequest($request, [
             'skillId' => 'required',
             'detail' => 'required',
         ]);

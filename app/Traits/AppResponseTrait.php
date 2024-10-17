@@ -1,22 +1,34 @@
 <?php
 
 namespace App\Traits;
-
-use App\Constants\AppString;
+use App\Constants\ResStatus;
 use App\Constants\StringConstant;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\App;
 
 trait AppResponseTrait {
+
     public function appResponse($res) 
     {
-        return response()->json(['status' => $res["status"] ?? "", 'data' => $res["data"] ?? "",  'msg' => $res["msg"] ?? "", 'success' => $res["success"] ?? false, 'error' => $res["error"] ?? "",]);
+        return response()->json([
+            'status' => $res["status"] ?? ResStatus::$Status400, 
+            'data' => $res["data"] ?? "",
+            'msg' => $res["msg"] ?? "",
+            'success' => $res["success"] ?? false,
+            'error' => $res["error"] ?? "",
+        ]);
     }
 
-    public function incompleteRequest($errors)  {
+    public function incompleteRequest()  {
         return $this->appResponse([
-            "status" => 400,
-            "error" => $errors,
-            "msg" => StringConstant::$incompletePayload,
+            "error" => StringConstant::$incompletePayload,
+        ]);
+    }
+
+    public function errorRequest($data) 
+    {
+        return $this->appResponse([
+            'error' => App::environment('local', 'staging') ? $data['error'] : StringConstant::$SWW,
+            'status' => ResStatus::$Status500,
         ]);
     }
 }

@@ -2,9 +2,6 @@
 
 namespace App\Utils;
 
-use App\Constants\StringConstant;
-use Illuminate\Support\Facades\Validator;
-
 class ResponseHelper 
 {
     static function appResponse($res) 

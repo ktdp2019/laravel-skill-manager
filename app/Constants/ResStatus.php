@@ -7,4 +7,5 @@ class ResStatus {
     public static $Status401 = 401;
     public static $Status200 = 200;
     public static $Status201 = 201;
+    public static $Status500 = 500;
 }
