@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('skill_category', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string('title');
-            $table->integer('skill_category_id')->unique();
+        Schema::table('skills', function (Blueprint $table) {
+            $table->dropForeign(['category_id']);
         });
     }
 
@@ -24,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::create('skill_category', function (Blueprint $table) {
-            $table->dropColumn('skill_category_id');
+        Schema::table('skills', function (Blueprint $table) {
+            //
         });
-        
     }
 };

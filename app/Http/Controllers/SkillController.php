@@ -50,7 +50,7 @@ class SkillController extends Controller
             return  $this->incompleteRequest();
         }
         $skillCatogory = new SkillCategory();
-        $skillCatogory->createCategory($request);
+        $skillCatogory->createVerifiedCategory($request);
         return  $this->appResponse([
             'status' => ResStatus::$Status201, 
             'data' => $skillCatogory,
@@ -74,12 +74,16 @@ class SkillController extends Controller
             'title' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
-            'category_id' => 'required',
             'category_name' => 'required',
         ];
         $this->isInvalidRequest($request, $rBody);
         $userId = $request->get('user_id');
         $request['userId'] = $userId;
+        $skillCategory = new SkillCategory();
+        $lastCatogory = SkillCategory::all()->last();
+        $request['skill_category_id'] = $lastCatogory->skill_category_id + 1;
+        $category = $skillCategory->createUnVerifiedCategory($request);
+        $request['category_id'] = $category->skill_category_id;
         $newSkill = new Skill();
         $newSkill->createSkill($request);
         return $this->appResponse([
