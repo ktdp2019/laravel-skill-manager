@@ -3,12 +3,23 @@
 namespace App\Models;
 
 use App\Utils\TimeHelper;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Skill extends Model
 {
     use HasFactory;
+
+    public function getCreatedAtAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->timestamp * 1000 : null;
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->timestamp * 1000 : null;
+    }
 
     public function createSkill($skillData) {
         $this->title = $skillData['title'];

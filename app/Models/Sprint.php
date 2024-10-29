@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Utils\TimeHelper;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +12,16 @@ class Sprint extends Model
     use HasFactory;
 
     protected $table = 'sprint';
+
+    public function getEndDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->timestamp * 1000 : null;
+    }
+
+    public function getStartDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->timestamp * 1000 : null;
+    }
 
     function createSprint($data) {
         $this->skill_id = $data['skill_id'];
