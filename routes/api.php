@@ -27,6 +27,7 @@ Route::middleware(['verify.jwt'])->group(function () {
 
     // Goal
     Route::post('goal/create', [GoalController::class, 'createGoalFinalizer']);
+    Route::get('goal/all/get/{skillId}', [GoalController::class, 'fetchAllGoal']);
 
 
     // Sprint

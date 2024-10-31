@@ -23,10 +23,21 @@ class GoalController extends Controller
         $this->isInvalidRequest($request, $payload);
         $goal = new Goal();
         $goal->createGoal($request);
-        $this->appResponse([
+        return $this->appResponse([
             'status' => ResStatus::$Status201,
             'msg' => StringConstant::$GOAL_CREATED,
             'data' => $goal,
+            'success' => true,
+        ]);
+    }
+
+    public function fetchAllGoal($skillId) {
+        $allGoal = Goal::where(["skill_id" => $skillId])->get();
+        return $this->appResponse([
+            'status' => ResStatus::$Status200,
+            'msg' => StringConstant::$REQUEST_SUCCESS,
+            'data' => $allGoal,
+            'success' => true,
         ]);
     }
 }
