@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constants\ResStatus;
 use App\Constants\StringConstant;
+use App\Models\Goal;
 use App\Models\Skill;
 use App\Models\SkillCategory;
 use App\Models\Sprint;
@@ -107,8 +108,8 @@ class SkillController extends Controller
      */
     public function show(Skill $skill)
     {   
-        $allSprint = Sprint::where(["skill_id" => $skill->id])->get();
-        $skill['allSprint'] = $allSprint;
+        $allSprint = Goal::where(["skill_id" => $skill->id])->get();
+        $skill['allGoal'] = $allSprint;
         return ResponseHelper::appResponse([
             "data" => $skill,
             "status" => 201,

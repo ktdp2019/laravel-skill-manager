@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Constants\ResStatus;
 use App\Constants\StringConstant;
 use App\Models\Goal;
+use App\Models\Sprint;
 use App\Traits\AppControllerTrait;
 use Illuminate\Http\Request;
 
@@ -31,12 +32,16 @@ class GoalController extends Controller
         ]);
     }
 
-    public function fetchAllGoal($skillId) {
-        $allGoal = Goal::where(["skill_id" => $skillId])->get();
+    public function fetchGoalDetail(Goal $goal) {
+        $allGoal = [];
+        if ($goal->id) {
+            $allGoal = Sprint::where(["goal_id" => $goal->id])->get();
+        }
+        $goal['allGoal'] = $allGoal;
         return $this->appResponse([
             'status' => ResStatus::$Status200,
             'msg' => StringConstant::$REQUEST_SUCCESS,
-            'data' => $allGoal,
+            'data' => $goal,
             'success' => true,
         ]);
     }
