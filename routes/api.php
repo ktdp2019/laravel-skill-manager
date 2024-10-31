@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GoalController;
 use App\Http\Controllers\PracticalNoteController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\SprintController;
@@ -16,13 +17,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['verify.jwt'])->group(function () {
 
     // Skill
-    Route::post('skill/create/without/test', [SkillController::class, 'create']);
+    Route::post('skill/create/without/test', [SkillController::class, 'createSkillWithoutTest']);
     Route::get('skill/get/all', [SkillController::class, 'index']);
     Route::get('skill/detail/{skill}', [SkillController::class, 'show']);
     Route::get('get/sprint/{skillId}', [TaskController::class, 'getAllSprint']);
     Route::post('create/task', [TaskController::class, 'createSprint']);
     Route::post('skill/category/create', [SkillController::class, 'addSkillCategory']);
     Route::get('skill/category/all/get', [SkillController::class, 'getAllSkillCategory']);
+
+    // Goal
+    Route::post('goal/create', [GoalController::class, 'createGoalFinalizer']);
+
 
     // Sprint
     Route::post('sprint/create', [SprintController::class, 'store'],);

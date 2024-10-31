@@ -13,11 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('skills', function (Blueprint $table) {
-            $table->unsignedBigInteger('category_id');
-    // Create the new foreign key constraint
-    $table->foreign('category_id')
-          ->references('skill_category_id')
-          ->on('skill_category');
+    //         $table->unsignedBigInteger('category_id');
+    // // Create the new foreign key constraint
+    // $table->foreign('category_id')
+    //       ->references('skill_category_id')
+    //       ->on('skill_category');
         });
 
         // DB::table('skills')->update([

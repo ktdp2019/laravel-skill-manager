@@ -68,7 +68,7 @@ class SkillController extends Controller
         ]);
     }
 
-    public function create(Request $request)
+    public function createSkillWithoutTest(Request $request)
     {
         $rBody = [
             'title' => 'required',

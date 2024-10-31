@@ -16,4 +16,5 @@ class StringConstant {
     public static $SWW = "Something went wrong";
     public static $SKILL_CATEGORY_ST = "Skill Category created successfully";
     public static $SKILL_CREATED = "Skill created successfully";
+    public static $GOAL_CREATED = "Goal created successfully";
 }
