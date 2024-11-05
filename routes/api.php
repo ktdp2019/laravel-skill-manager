@@ -31,7 +31,7 @@ Route::middleware(['verify.jwt'])->group(function () {
 
 
     // Sprint
-    Route::post('sprint/create', [SprintController::class, 'store'],);
+    Route::post('sprint/create', [SprintController::class, 'createSprintFinalizer'],);
     Route::get('sprint/detail/{sprint}', [SprintController::class, 'show'],);
 
     // Theory notes

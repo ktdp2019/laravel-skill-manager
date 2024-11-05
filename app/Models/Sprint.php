@@ -24,7 +24,7 @@ class Sprint extends Model
     }
 
     function createSprint($data) {
-        $this->skill_id = $data['skill_id'];
+        $this->goal_id = $data['goal_id'];
         $this->start_date = TimeHelper::getDateFromEpochTime($data['start_date']);
         $this->end_date = TimeHelper::getDateFromEpochTime($data['end_date']);
         $this->title = $data['title'];

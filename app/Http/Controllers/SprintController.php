@@ -6,12 +6,16 @@ use App\Constants\StringConstant;
 use App\Models\Practical;
 use App\Models\Sprint;
 use App\Models\Theory;
+use App\Traits\AppRequestTrait;
 use App\Utils\RequestHelper;
 use App\Utils\ResponseHelper;
 use Illuminate\Http\Request;
 
 class SprintController extends Controller
 {
+
+    use AppRequestTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -29,25 +33,17 @@ class SprintController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function createSprintFinalizer(Request $request)
     {
         $rBody = [
-            'skill_id' => "required",
             'title' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
             'theory' => 'required',
             'practical' => 'required',
+            'goal_id' => 'required'
         ];
-        $validator = RequestHelper::validateRequest($request, $rBody);
-        if ($validator->fails()) {
-            return ResponseHelper::appResponse([
-                "data" => null,
-                "status" => 400,
-                "error" => $validator->errors(),
-                "msg" => StringConstant::$incompletePayload,
-            ]);
-        }
+        $this->isInvalidRequest($request, $rBody);
         $newSprint = new Sprint();
         $newSprint->createSprint($request);
         $sprintId = $newSprint->id;
