@@ -33,11 +33,11 @@ class GoalController extends Controller
     }
 
     public function fetchGoalDetail(Goal $goal) {
-        $allGoal = [];
+        $allSprint = [];
         if ($goal->id) {
-            $allGoal = Sprint::where(["goal_id" => $goal->id])->get();
+            $allSprint = Sprint::where(["goal_id" => $goal->id])->get();
         }
-        $goal['allGoal'] = $allGoal;
+        $goal['allGoal'] = $allSprint;
         return $this->appResponse([
             'status' => ResStatus::$Status200,
             'msg' => StringConstant::$REQUEST_SUCCESS,
