@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\ResStatus;
 use App\Constants\StringConstant;
 use App\Models\PracticalNote;
 use App\Utils\RequestHelper;
@@ -74,6 +75,11 @@ class PracticalNoteController extends Controller
      */
     public function destroy(PracticalNote $practicalNote)
     {
-        //
+        PracticalNote::where(['id' => $practicalNote->id])->delete();
+        return $this->appResponse([
+            "status" => ResStatus::$Status204,
+            "msg" => StringConstant::$NOTE_DELETED,
+            "success" => true,
+        ]);
     }
 }

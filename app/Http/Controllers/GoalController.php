@@ -45,4 +45,19 @@ class GoalController extends Controller
             'success' => true,
         ]);
     }
+
+    public function goalDeleteFinalizer(Request $request)
+    {   
+        $rBody = [
+            'goal_id' => 'required', 
+        ];
+        $this->isInvalidRequest($request, $rBody);
+        Goal::where(['id' => $request['goal_id'],])->delete();
+        return $this->appResponse([
+            "status" => ResStatus::$Status204,
+            "msg" => StringConstant::$GOAL_DELETED,
+            "success" => true,
+        ]);
+    }
+
 }

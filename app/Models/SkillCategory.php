@@ -41,7 +41,7 @@ class SkillCategory extends Model
     }
 
     private function createCategory($data) {
-        $category = $this->isDuplicateCategory(strtoupper($data['title']));
+        $category = $this->isDuplicateCategory(strtoupper($data['category_name']));
         if ($category) {
             return $category;
         }

@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\ResStatus;
 use App\Constants\StringConstant;
 use App\Models\TheoryNote;
+use App\Traits\AppControllerTrait;
 use App\Utils\RequestHelper;
 use App\Utils\ResponseHelper;
 use Illuminate\Http\Request;
 
 class TheoryNoteController extends Controller
 {
+    use AppControllerTrait;
+
     public function index($theoryId)
     {
         $allNote = TheoryNote::where(["theory_id" => $theoryId])->get();
@@ -71,6 +75,11 @@ class TheoryNoteController extends Controller
      */
     public function destroy(TheoryNote $theoryNote)
     {
-        //
+        TheoryNote::where(['id' => $theoryNote->id])->delete();
+        return $this->appResponse([
+            "status" => ResStatus::$Status204,
+            "msg" => StringConstant::$NOTE_DELETED,
+            "success" => true,
+        ]);
     }
 }

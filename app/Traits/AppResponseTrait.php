@@ -11,7 +11,7 @@ trait AppResponseTrait {
     {
         return response()->json([
             'status' => $res["status"] ?? ResStatus::$Status400, 
-            'data' => $res["data"] ?? "",
+            'data' => $res["data"] ?? null,
             'msg' => $res["msg"] ?? "",
             'success' => $res["success"] ?? false,
             'error' => $res["error"] ?? "",

@@ -29,6 +29,26 @@ class SkillController extends Controller
             "success" => true,
         ]);
     }
+    
+    public function getSkillBetweenDateFinalizer(Request $request)
+    {
+        $rBody = [
+            'start_date' => 'required',
+            'end_date' => 'required',
+        ];
+        $this->isInvalidRequest($request, $rBody);
+        $userId = $request->get('user_id');
+        $allSkill = Skill::where('id', $userId)
+                            ->where('start_date', '<=', $rBody['start_date'])
+                            ->where('end_date', '>=', $rBody['end_date'])
+                            ->get();
+        return  $this->appResponse([
+            'status' => ResStatus::$Status200, 
+            'data' => $allSkill,
+            'msg' => StringConstant::$REQUEST_SUCCESS,
+            'success' => true,
+        ]);
+    }
 
     public function getSkillTask($skillId) {
         $allSkill = Skill::where(["id" => $skillId])->first();
@@ -114,6 +134,22 @@ class SkillController extends Controller
             "data" => $skill,
             "status" => 201,
             "msg" => "",
+            "success" => true,
+        ]);
+    } 
+
+
+    public function skillDeleteFinalizer(Request $request)
+    {   
+        $rBody = [
+            'skill_id' => 'required', 
+        ];
+        $userId = $request->get('user_id');
+        $this->isInvalidRequest($request, $rBody);
+        Skill::where(['id' => $request['skill_id'], 'user_id' => $userId])->delete();
+        return $this->appResponse([
+            "status" => ResStatus::$Status204,
+            "msg" => StringConstant::$SKILL_DELETED,
             "success" => true,
         ]);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\ResStatus;
 use App\Constants\StringConstant;
 use App\Models\Practical;
 use App\Models\Sprint;
@@ -39,8 +40,7 @@ class SprintController extends Controller
             'title' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
-            'theory' => 'required',
-            'practical' => 'required',
+            "sectionList" => 'required',
             'goal_id' => 'required'
         ];
         $this->isInvalidRequest($request, $rBody);
@@ -50,31 +50,25 @@ class SprintController extends Controller
         $count = 0;
 
         // Create theory
-        foreach( $request['theory'] as $key => $value) {
+        foreach( $request['sectionList'] as $key => $section) {
             $count = $count + 1;
-            $data = [
+            $theory = $section['theory'];
+            $practical = $section['practical'];
+            $tData = [
                 'sprint_id' => $sprintId,
-                'title' => $value['title'],
+                'title' => $theory['title'],
                 'serial_number' => $count
             ];
             $theory = new Theory();
-            $theory = $theory->createTheory($data);
-        }
-        
-        $count = 0;
-
-        // Create practical
-        foreach( $request['practical'] as $key => $value) {
-            $count = $count + 1;
-            $data = [
+            $theory = $theory->createTheory($tData);
+            $pData = [
                 'sprint_id' => $sprintId,
-                'title' => $value['title'],
+                'title' => $practical['title'],
                 'serial_number' => $count
             ];
             $theory = new Practical();
-            $theory->createPractical($data);
+            $theory->createPractical($pData);
         }
-
 
         return ResponseHelper::appResponse([
             "data" => ['id' => $newSprint->id],
@@ -87,21 +81,50 @@ class SprintController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Sprint $sprint)
+    public function fetchSprint(Sprint $sprint)
     {
         $sprintId = $sprint->id;
+        
         $allTheory = Theory::where(["sprint_id" => $sprintId])->get();
         $allPractical = Practical::where(["sprint_id" => $sprintId])->get();
+        $sprint['section'] = [];
+        foreach ($allTheory as $theory) {
+            $index = 0;
+            $sprint['section'][] = [
+                'theory' => [
+                    'title' => $allTheory[$index]['title'],
+                    'id' => $allTheory[$index]['id']
+                ],
+                'practical' => [
+                    'title' => $allPractical[$index]['title'],
+                    'id' => $allPractical[$index]['id']
+                ],
+            ];
+            $index++;
+        }
+        
         return ResponseHelper::appResponse([
-            "data" => [
-                'theory' => $allTheory,
-                'practical' => $allPractical,
-            ],
+            "data" => $sprint,
             "status" => 201,
             "msg" => "",
             "success" => true,
         ]);
     }
+
+    public function sprintDeleteFinalizer(Request $request)
+    {   
+        $rBody = [
+            'sprint_id' => 'required', 
+        ];
+        $this->isInvalidRequest($request, $rBody);
+        Sprint::where(['id' => $request['sprint_id']])->delete();
+        return $this->appResponse([
+            "status" => ResStatus::$Status204,
+            "msg" => StringConstant::$SPRINT_DELETED,
+            "success" => true,
+        ]);
+    }
+
 
     /**
      * Update the specified resource in storage.
