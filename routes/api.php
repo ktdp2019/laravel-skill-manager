@@ -60,7 +60,7 @@ Route::middleware(['verify.jwt'])->group(function () {
     // Practical notes
     Route::post('practical/note/create', [PracticalNoteController::class, 'store'],);
     Route::get('practical/note/all/{practicalId}', [PracticalNoteController::class, 'index'],);
-    Route::post('practical/note/delete/{practicalNote}', [PracticalNote::class, 'destroy'],);
+    Route::post('practical/note/delete/{practicalNote}', [PracticalNoteController::class, 'destroy'],);
 
     
    

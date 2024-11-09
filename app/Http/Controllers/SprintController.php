@@ -84,13 +84,17 @@ class SprintController extends Controller
     public function fetchSprint(Sprint $sprint)
     {
         $sprintId = $sprint->id;
-        
         $allTheory = Theory::where(["sprint_id" => $sprintId])->get();
         $allPractical = Practical::where(["sprint_id" => $sprintId])->get();
-        $sprint['section'] = [];
+       
+        $datail = [
+            "id" => $sprint->id,
+            "title" => $sprint->title,
+        ];
+        $datail['section'] = [];
         foreach ($allTheory as $theory) {
             $index = 0;
-            $sprint['section'][] = [
+            $datail['section'][] = [
                 'theory' => [
                     'title' => $allTheory[$index]['title'],
                     'id' => $allTheory[$index]['id']
@@ -104,7 +108,7 @@ class SprintController extends Controller
         }
         
         return ResponseHelper::appResponse([
-            "data" => $sprint,
+            "data" => $datail,
             "status" => 201,
             "msg" => "",
             "success" => true,
