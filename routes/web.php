@@ -10,7 +10,7 @@ Route::get('/', function () {
     $message = CloudMessage::fromArray([
         'token' => 'd2uwLEvWSKmvTxqtuNs9Vn:APA91bED-Sfc7EUqhafSlt2mOqSeWthmkJfUPtzHxPbw0Xbd0DC2cxKOg27irsy6hV4yIJnR_GQFwGfqDiHpASsZfQQJUXQ4lUEQbVwyQR38Nj2d72vKv5g',
         'notification' => [
-            'title' => 'New Message',
+            'title' => 'New Message in server',
             'body' => 'You have a new notification!',
         ],
     ]);
