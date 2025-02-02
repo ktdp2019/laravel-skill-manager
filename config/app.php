@@ -168,6 +168,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        // Custom code 
+        App\Providers\FirebaseServiceProvider::class,
+
     ])->toArray(),
 
     /*
