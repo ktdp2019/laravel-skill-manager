@@ -24,7 +24,7 @@ Route::middleware(['verify.jwt'])->group(function () {
     // Skill
     Route::post('skill/create/without/test', [SkillController::class, 'createSkillWithoutTest']);
     Route::get('skill/get/all', [SkillController::class, 'index']);
-    Route::get('skill/detail/{skill}', [SkillController::class, 'show']);
+    Route::get('skill/detail/{skill}', [SkillController::class, 'getSkillDetail']);
     Route::get('get/sprint/{skillId}', [TaskController::class, 'getAllSprint']);
     Route::post('create/task', [TaskController::class, 'createSprint']);
     Route::post('skill/between/date/get', [SkillController::class, 'getSkillBetweenDateFinalizer']);
@@ -44,11 +44,13 @@ Route::middleware(['verify.jwt'])->group(function () {
     Route::post('sprint/create', [SprintController::class, 'createSprintFinalizer'],);
     Route::get('sprint/detail/{sprint}', [SprintController::class, 'fetchSprint'],);
     Route::post('sprint/delete', [SprintController::class, 'sprintDeleteFinalizer'],);
+    Route::post('sprint/add/section', [SprintController::class, 'addSectionFinalizer'],);
 
     // Theory
     Route::post('theory/delete/{theory}', [TheoryController::class, 'destroy'],); 
-    
-    // Theory
+
+
+    // Practical
     Route::post('practical/delete/{practical}', [PracticalController::class, 'destroy'],);
 
 

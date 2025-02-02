@@ -128,8 +128,8 @@ class SkillController extends Controller
      */
     public function show(Skill $skill)
     {   
-        $allSprint = Goal::where(["skill_id" => $skill->id])->get();
-        $skill['allGoal'] = $allSprint;
+        $allGoal = Goal::where(["skill_id" => $skill->id])->get();
+        $skill['allGoal'] = $allGoal;
         return ResponseHelper::appResponse([
             "data" => $skill,
             "status" => 201,

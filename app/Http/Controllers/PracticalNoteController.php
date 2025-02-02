@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Constants\ResStatus;
 use App\Constants\StringConstant;
 use App\Models\PracticalNote;
+use App\Traits\AppControllerTrait;
 use App\Utils\RequestHelper;
 use App\Utils\ResponseHelper;
 use Illuminate\Http\Request;
 
 class PracticalNoteController extends Controller
 {
+
+    use AppControllerTrait;
     /**
      * Display a listing of the resource.
      */

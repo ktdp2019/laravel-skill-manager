@@ -76,7 +76,6 @@ class TheoryNoteController extends Controller
     public function destroy(TheoryNote $theoryNote)
     {
         TheoryNote::where(['id' => $theoryNote->id])->delete();
-        echo "shs";
         return $this->appResponse([
             "status" => ResStatus::$Status204,
             "msg" => StringConstant::$NOTE_DELETED,

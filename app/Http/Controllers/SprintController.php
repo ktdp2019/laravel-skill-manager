@@ -12,6 +12,8 @@ use App\Utils\RequestHelper;
 use App\Utils\ResponseHelper;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
+
 class SprintController extends Controller
 {
 
@@ -78,6 +80,39 @@ class SprintController extends Controller
         ]);
     }
 
+    public function addSectionFinalizer(Request $request)
+    {
+        $rBody = [
+            'sprintId' => 'required',
+            'theory' => 'required',
+            'practical' => 'required',
+        ];
+        $this->isInvalidRequest($request, $rBody);
+        $sprintId = $rBody['sprintId'];
+        $sprint = Sprint::find($sprintId);
+        $tData = [
+            'sprint_id' => $sprintId,
+            'title' => $rBody['theory'],
+            'serial_number' => 1,
+        ];
+        $theory = new Theory();
+        $theory = $theory->createTheory($tData);
+        $pData = [
+            'sprint_id' => $sprintId,
+            'title' => $rBody['practical'],
+            'serial_number' => 1
+        ];
+        $theory = new Practical();
+        $theory->createPractical($pData);
+
+        return $this->appResponse([
+            "data" => ['id' => $sprint->id],
+            "status" => ResStatus::$Status201,
+            "msg" => StringConstant::$SPRINT_SECTION_ADDED,
+            "success" => true,
+        ]);
+    }
+
     /**
      * Display the specified resource.
      */
@@ -86,23 +121,26 @@ class SprintController extends Controller
         $sprintId = $sprint->id;
         $allTheory = Theory::where(["sprint_id" => $sprintId])->get();
         $allPractical = Practical::where(["sprint_id" => $sprintId])->get();
-       
+        $allItem = $allTheory;
+        if ($allItem->isEmpty()){
+            $allItem = $allPractical;
+        }
         $datail = [
             "id" => $sprint->id,
             "title" => $sprint->title,
         ];
         $datail['section'] = [];
-        foreach ($allTheory as $theory) {
+        foreach ($allItem as $theory) {
             $index = 0;
             $datail['section'][] = [
-                'theory' => [
+                'theory' => !$allTheory->isEmpty() ? [
                     'title' => $allTheory[$index]['title'],
                     'id' => $allTheory[$index]['id']
-                ],
-                'practical' => [
+                ]: null,
+                'practical' => !$allPractical->isEmpty() ? [
                     'title' => $allPractical[$index]['title'],
                     'id' => $allPractical[$index]['id']
-                ],
+                ] : null,
             ];
             $index++;
         }

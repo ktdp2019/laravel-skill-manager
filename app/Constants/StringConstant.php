@@ -23,4 +23,5 @@ class StringConstant {
     public static $THOEORY_DELETED = "Theory deleted successfully";
     public static $PRACTICAL_DELETED = "Practical deleted successfully";
     public static $NOTE_DELETED = "Note deleted successfully";
+    public static $SPRINT_SECTION_ADDED = "Sprint section added successfully";
 }

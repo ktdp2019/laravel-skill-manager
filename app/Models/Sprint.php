@@ -32,4 +32,5 @@ class Sprint extends Model
         return $this;
 
     }
+
 }
