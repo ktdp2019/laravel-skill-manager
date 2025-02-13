@@ -23,6 +23,7 @@ class ProfileController extends Controller
         return $this->appResponse([
             "data" => $profile,
             "status" => 201,
+            "success" => true,
         ]);
     }
 
@@ -38,6 +39,7 @@ class ProfileController extends Controller
         $profile->save();
         return $this->appResponse([
             "data" => $profile,
+            "success" => true,
         ]);
     }
 }
