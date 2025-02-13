@@ -8,6 +8,7 @@ use App\Models\Practical;
 use App\Models\Sprint;
 use App\Models\Theory;
 use App\Traits\AppRequestTrait;
+use App\Traits\AppNotification;
 use App\Utils\RequestHelper;
 use App\Utils\ResponseHelper;
 use Illuminate\Http\Request;
@@ -18,13 +19,14 @@ class SprintController extends Controller
 {
 
     use AppRequestTrait;
+   
 
     /**
      * Display a listing of the resource.
      */
     public function index($skillId)
     {
-        $allSprint = Sprint::where(["skill_id" => $skillId])->get();
+        $allSprint = Sprint::where(["skill_id" => $skillId])->get();  $this->sendMessage();
         return ResponseHelper::appResponse([
             "data" => $allSprint,
             "status" => 201,

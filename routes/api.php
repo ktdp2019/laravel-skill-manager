@@ -8,6 +8,7 @@ use App\Http\Controllers\SprintController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TheoryController;
 use App\Http\Controllers\TheoryNoteController;
+use App\Http\Controllers\ProfileController;
 use App\Models\Practical;
 use App\Models\PracticalNote;
 use App\Models\Theory;
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('profile/register/fcm/token', [ProfileController::class, 'registerFCMToken']);
 
 Route::middleware(['verify.jwt'])->group(function () {
 
