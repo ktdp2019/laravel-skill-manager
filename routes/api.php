@@ -24,6 +24,9 @@ Route::post('profile/register/fcm/token', [ProfileController::class, 'registerFC
 
 Route::middleware(['verify.jwt'])->group(function () {
 
+    // Profile
+    Route::post('profile/update/fcm/user/id', [ProfileController::class, 'updateUserId']);
+
     // Skill
     Route::post('skill/create/without/test', [SkillController::class, 'createSkillWithoutTest']);
     Route::get('skill/get/all', [SkillController::class, 'index']);

@@ -25,4 +25,19 @@ class ProfileController extends Controller
             "status" => 201,
         ]);
     }
+
+    // Update fcm token
+    public function updateUserId(Request $request) {
+        $rBody = [
+            'uuid' => 'required',
+        ];
+        $this->isInvalidRequest($request, $rBody);
+        $userId = $request->get('user_id');
+        $profile = Profile::where('uuid', $request->uuid)->first();
+        $profile->user_id = $userId;
+        $profile->save();
+        return $this->appResponse([
+            "data" => $profile,
+        ]);
+    }
 }
