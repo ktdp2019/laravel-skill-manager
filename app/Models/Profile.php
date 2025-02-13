@@ -16,6 +16,7 @@ class Profile extends Model
     public function createProfile($data ) {
         $this->firebase_token = $data['fcm_token'];
         $this->uuid = $data['uuid'];
+        $this->user_id = $data['user_id'] ?? null;
         $this->save();
     }
 }
