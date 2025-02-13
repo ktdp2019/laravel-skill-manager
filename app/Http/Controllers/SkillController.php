@@ -6,18 +6,19 @@ use App\Constants\ResStatus;
 use App\Constants\StringConstant;
 use App\Models\Goal;
 use App\Models\Skill;
+use App\Models\Profile;
 use App\Models\SkillCategory;
 use App\Models\Sprint;
 use App\Models\Task;
 use App\Traits\AppControllerTrait;
 use App\Traits\AppNotification;
-use App\Utils\RequestHelper;
 use App\Utils\ResponseHelper;
 use Illuminate\Http\Request;
 
 class SkillController extends Controller
 {
     use AppControllerTrait;
+    use AppNotification;
     
     public function index(Request $request)
     {
@@ -99,15 +100,27 @@ class SkillController extends Controller
             'category_name' => 'required',
         ];
         $this->isInvalidRequest($request, $rBody);
+
         $userId = $request->get('user_id');
         $request['userId'] = $userId;
-        $skillCategory = new SkillCategory();
+
+        // Last Category
         $lastCatogory = SkillCategory::all()->last();
-        $request['skill_category_id'] = $lastCatogory->skill_category_id + 1;
+        $request['skill_category_id'] = ($lastCatogory ? $lastCatogory->skill_category_id : 0) + 1;
+
+        // CreateSkill Category
+        $skillCategory = new SkillCategory();
         $category = $skillCategory->createUnVerifiedCategory($request);
         $request['category_id'] = $category->skill_category_id;
+
+        // Create Skill
         $newSkill = new Skill();
         $newSkill->createSkill($request);
+
+        // Send Notification
+        $profile = Profile::where('user_id', $userId)->first();
+        $this->sendFcmMessage($profile->firebase_token, "Lead Create Successfully", $newSkill->title);
+        
         return $this->appResponse([
             "data" => ['id' => $newSkill->id],
             "status" => ResStatus::$Status201,

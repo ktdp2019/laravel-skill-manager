@@ -35,6 +35,7 @@ class ProfileController extends Controller
         $this->isInvalidRequest($request, $rBody);
         $userId = $request->get('user_id');
         $profile = Profile::where('uuid', $request->uuid)->first();
+        echo $userId;
         $profile->user_id = $userId;
         $profile->save();
         return $this->appResponse([

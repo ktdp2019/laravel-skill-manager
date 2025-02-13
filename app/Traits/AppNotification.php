@@ -5,14 +5,14 @@ namespace App\Traits;
 use Kreait\Firebase\Messaging\CloudMessage;
 
 trait AppNotification {
-    public function sendMessage() {
+    public function sendFcmMessage($token, $title, $body) {
         $firebase = app('firebase');
         $messaging = $firebase->createMessaging();
         $message = CloudMessage::fromArray([
-            'token' => 'eeHED2D0S32VZ-i-IOh4nU:APA91bHr6EIhmZQsf7k-hLFa7cMZdYbwkjH3fKr4xTJ-shbBg_QEwxhzzLyanaXC1Le_OMW15u5-zpCTotoqGJ4jbOeL8soYArsm_iLa6hBFSj2yZtGpt30',
+            'token' => $token,
             'notification' => [
-                'title' => 'New Message in server',
-                'body' => 'You have a new notification!',
+                'title' => $title,
+                'body' => $body,
             ],
         ]);
         echo "Sending message...";
