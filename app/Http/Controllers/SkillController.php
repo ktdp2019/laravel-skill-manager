@@ -24,7 +24,6 @@ class SkillController extends Controller
     {
         $userId = $request->get('user_id');
         $allSkill = Skill::where(["user_id" => $userId])->get();
-        echo $userId;
         return ResponseHelper::appResponse([
             "data" => $allSkill,
             "status" => 201,
