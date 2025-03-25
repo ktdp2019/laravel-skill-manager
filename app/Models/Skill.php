@@ -21,6 +21,18 @@ class Skill extends Model
         return $value ? Carbon::parse($value)->timestamp * 1000 : null;
     }
 
+    public function getStartDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->timestamp * 1000 : null;
+    }
+
+    public function getEndDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->timestamp * 1000 : null;
+    }
+
+    
+
     public function createSkill($skillData) {
         $this->title = $skillData['title'];
         $this->start_date = TimeHelper::getDateFromEpochTime($skillData['start_date']);
