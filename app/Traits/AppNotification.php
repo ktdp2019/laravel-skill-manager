@@ -15,7 +15,6 @@ trait AppNotification {
                 'body' => $body,
             ],
         ]);
-        echo "Sending message...";
         $messaging->send($message);
     }
 }
