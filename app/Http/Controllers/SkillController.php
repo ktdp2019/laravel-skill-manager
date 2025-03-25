@@ -140,7 +140,7 @@ class SkillController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Skill $skill)
+    public function getSkillDetail(Skill $skill)
     {   
         $allGoal = Goal::where(["skill_id" => $skill->id])->get();
         $skill['allGoal'] = $allGoal;
